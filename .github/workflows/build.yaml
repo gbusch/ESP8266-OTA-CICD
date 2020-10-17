@@ -11,14 +11,7 @@ jobs:
         name: 'Prepare output directories'      
       - run: platformio ci --build-dir="./bin" --keep-build-dir --project-conf=platformio.ini ./src/
         name: 'Build firmware'
-      - uses: CopyFiles@2
+      - uses: actions/upload-artifact@v2
         with:
-          SourceFolder: $(Build.SourcesDirectory)/bin/.pio/build/nodemcuv2/
-          Contents: 'firmware.bin'
-          TargetFolder: $(Build.ArtifactStagingDirectory)
-      - uses: PublishBuildArtifacts@1
-        with:
-          ArtifactName: 'Firmware $(Build.BuildNumber)'
-          PathtoPublish: $(Build.ArtifactStagingDirectory)
-          publishLocation: Container
-          TargetPath: .
+          name: firmware.bin
+          path: bin/.pio/build/nodemcuv2/firmware.bin
