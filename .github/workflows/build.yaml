@@ -5,6 +5,8 @@ jobs:
     container: infinitecoding/platformio-for-ci:latest
     runs-on: ubuntu-18.04
     steps:
+      - uses: actions/checkout@v2
+      - run: ls -l
       - run: |
           rm -fdr bin
           mkdir bin
