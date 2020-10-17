@@ -12,12 +12,12 @@ jobs:
       - run: platformio ci --build-dir="./bin" --keep-build-dir --project-conf=platformio.ini ./src/
         name: 'Build firmware'
       - uses: CopyFiles@2
-        inputs:
+        with:
           SourceFolder: $(Build.SourcesDirectory)/bin/.pio/build/nodemcuv2/
           Contents: 'firmware.bin'
           TargetFolder: $(Build.ArtifactStagingDirectory)
       - uses: PublishBuildArtifacts@1
-        inputs:
+        with:
           ArtifactName: 'Firmware $(Build.BuildNumber)'
           PathtoPublish: $(Build.ArtifactStagingDirectory)
           publishLocation: Container
