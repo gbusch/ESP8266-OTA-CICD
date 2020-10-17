@@ -9,16 +9,14 @@ resources:
 
 jobs:
   esp32-platformio:
-    displayName: "PlatformIO build"
     container: platformio
-    pool:
-      vmImage: ubuntu-18.04
+    runs-on: ubuntu-18.04
     steps:
-      - script: |
+      - run: |
           rm -fdr bin
           mkdir bin
         displayName: 'Prepare output directories'      
-      - script: platformio ci --build-dir="./bin" --keep-build-dir --project-conf=platformio.ini ./src/
+      - run: platformio ci --build-dir="./bin" --keep-build-dir --project-conf=platformio.ini ./src/
         displayName: 'Build firmware'
       - task: CopyFiles@2
         inputs:
