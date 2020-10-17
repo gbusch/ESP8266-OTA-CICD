@@ -8,7 +8,7 @@ resources:
     endpoint: dockerhub-infinite-coding
 
 jobs:
-- job: esp32_platformio
+- job: esp32-platformio
   displayName: "PlatformIO build"
   container: platformio
   pool:
