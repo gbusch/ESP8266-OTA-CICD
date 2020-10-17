@@ -11,6 +11,13 @@ jobs:
           rm -fdr bin
           mkdir bin
         name: 'Prepare output directories'      
+      - shell: bash
+        env:
+          WIFI_SSID: ${{ secrets.WIFI_SSID }}
+          WIFI_PASSWORD: ${{ secrets.WIFI_PASSWORD }}
+        run: |
+          echo 'const char* ssid = "'${WIFI_SSID}'";' > src/credentials.h
+          echo 'const char* password = "'${WIFI_PASSWORD}'";' >> src/credentials.h
       - run: platformio ci --build-dir="./bin" --keep-build-dir --project-conf=platformio.ini ./src/
         name: 'Build firmware'
       - uses: actions/upload-artifact@v2
