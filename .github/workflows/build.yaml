@@ -1,15 +1,8 @@
-trigger:
-- master
-
-resources:
-  containers:
-  - container: platformio
-    image: infinitecoding/platformio-for-ci:latest
-    endpoint: dockerhub-infinite-coding
+on: push
 
 jobs:
   esp32-platformio:
-    container: platformio
+    container: infinitecoding/platformio-for-ci:latest
     runs-on: ubuntu-18.04
     steps:
       - run: |
