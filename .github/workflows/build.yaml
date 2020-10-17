@@ -15,15 +15,15 @@ jobs:
       - run: |
           rm -fdr bin
           mkdir bin
-        displayName: 'Prepare output directories'      
+        name: 'Prepare output directories'      
       - run: platformio ci --build-dir="./bin" --keep-build-dir --project-conf=platformio.ini ./src/
-        displayName: 'Build firmware'
-      - task: CopyFiles@2
+        name: 'Build firmware'
+      - uses: CopyFiles@2
         inputs:
           SourceFolder: $(Build.SourcesDirectory)/bin/.pio/build/nodemcuv2/
           Contents: 'firmware.bin'
           TargetFolder: $(Build.ArtifactStagingDirectory)
-      - task: PublishBuildArtifacts@1
+      - uses: PublishBuildArtifacts@1
         inputs:
           ArtifactName: 'Firmware $(Build.BuildNumber)'
           PathtoPublish: $(Build.ArtifactStagingDirectory)
