@@ -8,26 +8,26 @@ resources:
     endpoint: dockerhub-infinite-coding
 
 jobs:
-- job: esp32-platformio
-  displayName: "PlatformIO build"
-  container: platformio
-  pool:
-    vmImage: ubuntu-18.04
-  steps:
-    - script: |
-        rm -fdr bin
-        mkdir bin
-      displayName: 'Prepare output directories'      
-    - script: platformio ci --build-dir="./bin" --keep-build-dir --project-conf=platformio.ini ./src/
-      displayName: 'Build firmware'
-    - task: CopyFiles@2
-      inputs:
-        SourceFolder: $(Build.SourcesDirectory)/bin/.pio/build/nodemcuv2/
-        Contents: 'firmware.bin'
-        TargetFolder: $(Build.ArtifactStagingDirectory)
-    - task: PublishBuildArtifacts@1
-      inputs:
-        ArtifactName: 'Firmware $(Build.BuildNumber)'
-        PathtoPublish: $(Build.ArtifactStagingDirectory)
-        publishLocation: Container
-        TargetPath: .
+  esp32-platformio:
+    displayName: "PlatformIO build"
+    container: platformio
+    pool:
+      vmImage: ubuntu-18.04
+    steps:
+      - script: |
+          rm -fdr bin
+          mkdir bin
+        displayName: 'Prepare output directories'      
+      - script: platformio ci --build-dir="./bin" --keep-build-dir --project-conf=platformio.ini ./src/
+        displayName: 'Build firmware'
+      - task: CopyFiles@2
+        inputs:
+          SourceFolder: $(Build.SourcesDirectory)/bin/.pio/build/nodemcuv2/
+          Contents: 'firmware.bin'
+          TargetFolder: $(Build.ArtifactStagingDirectory)
+      - task: PublishBuildArtifacts@1
+        inputs:
+          ArtifactName: 'Firmware $(Build.BuildNumber)'
+          PathtoPublish: $(Build.ArtifactStagingDirectory)
+          publishLocation: Container
+          TargetPath: .
